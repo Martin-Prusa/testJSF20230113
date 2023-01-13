@@ -1,0 +1,5 @@
+cz/martin/repositories/SuperheroRepository.class
+cz/martin/models/Publisher.class
+cz/martin/models/Hero.class
+cz/martin/services/SuperheroService.class
+cz/martin/beans/SuperheroBean.class
