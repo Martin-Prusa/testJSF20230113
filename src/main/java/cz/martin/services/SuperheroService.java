@@ -19,7 +19,7 @@ public class SuperheroService {
         return superheroRepository.getPublishers();
     }
 
-    public List<Hero> getHeroes(int publisher) {
-        return superheroRepository.getHeroes(publisher);
+    public List<Hero> getHeroes(int publisher, String orderBy, boolean asc) {
+        return superheroRepository.getHeroes(publisher, orderBy, asc);
     }
 }

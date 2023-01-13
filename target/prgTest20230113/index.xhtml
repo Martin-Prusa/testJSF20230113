@@ -20,6 +20,23 @@
         <div>
             <h2>List of heroes</h2>
 
+            <div>
+                <div>Order by</div>
+                <h:form>
+                    <h:commandButton disabled="#{superheroBean.orderBy == ''}" value="No order" action="#{superheroBean.so('')}" class="btn m-1 #{superheroBean.orderBy == '' ? 'btn-success' :'btn-outline-success' }"/>
+                    <ui:repeat value="#{superheroBean.order}" var="o">
+                        <h:commandButton disabled="#{superheroBean.orderBy == o}" value="#{o}" action="#{superheroBean.so(o)}" class="btn m-1 #{superheroBean.orderBy == o ? 'btn-success' :'btn-outline-success' }"/>
+                    </ui:repeat>
+                </h:form>
+            </div>
+            <div>
+                <div>Order</div>
+                <h:form>
+                    <h:commandButton disabled="#{superheroBean.asc}" value="ASC" action="#{superheroBean.sa(true)}" class="btn m-1 #{superheroBean.asc ? 'btn-success' : 'btn-outline-success'}"/>
+                    <h:commandButton disabled="#{!superheroBean.asc}" value="DESC" action="#{superheroBean.sa(false)}" class="btn m-1 #{!superheroBean.asc ? 'btn-success' : 'btn-outline-success'}" />
+                </h:form>
+            </div>
+
             <table class="table">
                 <thead>
                 <tr>

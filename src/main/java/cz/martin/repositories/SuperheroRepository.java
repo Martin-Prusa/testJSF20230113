@@ -32,17 +32,28 @@ public class SuperheroRepository {
         return publishers;
     }
 
-    public List<Hero> getHeroes(int publisher) {
+    public List<Hero> getHeroes(int publisher, String orderBy, boolean asc) {
         List<Hero> heroes = new ArrayList<>();
+        String order = switch (orderBy) {
+            case "pseudonym" -> "ORDER BY S.superhero_name ";
+            case "fullname" -> "ORDER BY S.full_name ";
+            case "gender" -> "ORDER BY G.gender ";
+            case "race" -> "ORDER BY R.race ";
+            case "alignment" -> "ORDER BY A.alignment ";
+            default -> "";
+        };
+
+        if(!order.equals("")) order += (asc ? "ASC " : "DESC ");
+
         try (
                 Connection connection = DriverManager.getConnection(databaseURL);
                 PreparedStatement statement = connection.prepareStatement("""
                 SELECT S.superhero_name, S.full_name, G.gender, R.race, A.alignment
-                FROM superhero AS S JOIN gender AS G ON S.gender_id = G.id
-                                    JOIN race AS R ON S.race_id = R.id
-                                    JOIN alignment AS A ON S.alignment_id = A.id
+                FROM superhero AS S LEFT JOIN gender AS G ON S.gender_id = G.id
+                                    LEFT JOIN race AS R ON S.race_id = R.id
+                                    LEFT JOIN alignment AS A ON S.alignment_id = A.id
                                     
-""" + (publisher != -1 ? "WHERE S.publisher_id = ? " : " "))
+""" + (publisher != -1 ? "WHERE S.publisher_id = ? " : " ") + order)
                 ) {
             if(publisher != -1) statement.setInt(1, publisher);
 
